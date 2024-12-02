@@ -15,7 +15,16 @@ CallPrinter >> printMethodSignature: aCompiledMethod into: aBuilder [
 	sign isUnary
 		ifTrue: [ 
 			aBuilder text: sign asString, '()'.
-			^ self ]
+			^ self ].
+	aBuilder text: (sign keywords first copyWithout: $:).
+		
+	sign keywords allButFirst do: [ :each | aBuilder text: (each capitalized copyWithout: $:) ].
+	aBuilder text: '('.
+	aCompiledMethod argumentNames 
+		do: [ :a | aBuilder text: a asString ]
+		separatedBy: [ aBuilder text: ', ' ].
+	aBuilder text: ')'.
+		
 	
 
 ]
