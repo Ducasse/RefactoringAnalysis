@@ -2,7 +2,8 @@ Class {
 	#name : 'APIAnalyser',
 	#superclass : 'Object',
 	#instVars : [
-		'builder'
+		'builder',
+		'printer'
 	],
 	#category : 'Refactoring-Analysis',
 	#package : 'Refactoring-Analysis'
@@ -13,6 +14,7 @@ APIAnalyser >> initialize [
 
 	super initialize.
 	builder := Microdown builder.
+	printer := CallPrinter new.
 	
 ]
 
@@ -36,8 +38,9 @@ APIAnalyser >> treatMethod [
 					((RBMethod methodsInProtocol: prot) sorted: #selector ascending) 
 						do: [ :each |
 						builder item: [
-							builder 
-								text: each selector.
+							printer printMethodSignature: each into: builder.
+							"builder 
+								text: each selector."
 							each firstComment ifNotEmpty: [ :s | 	
 								builder 
 									text: ' -- ';
