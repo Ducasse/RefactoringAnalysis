@@ -1,9 +1,20 @@
 Class {
 	#name : 'APIAnalyser',
 	#superclass : 'Object',
+	#instVars : [
+		'builder'
+	],
 	#category : 'Refactoring-Analysis',
 	#package : 'Refactoring-Analysis'
 }
+
+{ #category : 'as yet unclassified' }
+APIAnalyser >> initialize [
+
+	super initialize.
+	builder := Microdown builder.
+	
+]
 
 { #category : 'as yet unclassified' }
 APIAnalyser >> modelClasses [
@@ -13,10 +24,8 @@ APIAnalyser >> modelClasses [
 
 { #category : 'as yet unclassified' }
 APIAnalyser >> treatMethod [
-	"self new treatMethod"
-	| out builder | 
-	builder := Microdown builder.
-	out :=  #(#private #printing #'accessing - implementation').
+	"self new treatMethod" 
+
 	builder header: [ builder text: 'Method API' ] withLevel: 1.
 	
 	#(#accessing #compiling #'cross reference testing') do: [ :prot |
